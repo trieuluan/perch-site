@@ -29,6 +29,10 @@ jobs:
           cp index.html styles.css main.js _site/
           cp -R assets _site/
           touch _site/.nojekyll
+          # Cache-bust the stylesheet and script so a new page never runs an old cached copy
+          v="${GITHUB_SHA::7}"
+          sed -i "s|href=\"styles.css\"|href=\"styles.css?v=$v\"|; s|src=\"main.js\"|src=\"main.js?v=$v\"|" _site/index.html
+          grep -q "main.js?v=$v" _site/index.html
 
       - uses: actions/configure-pages@v5
 
