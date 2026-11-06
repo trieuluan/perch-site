@@ -38,6 +38,27 @@
     "audio.title": "Chọn đầu ra âm thanh",
     "audio.body": "Chuyển giữa loa, AirPods và các đầu ra khác bằng một nút trong trình phát.",
     "also": "Perch vẫn giữ mọi thứ của Boring Notch: trình phát nhạc, lịch, kệ tệp, HUD hệ thống, pin và gương webcam. Ứng dụng có tiếng Anh và tiếng Việt, theo ngôn ngữ của Mac.",
+    "nav.faq": "Hỏi đáp",
+    "news.title": "Có gì mới",
+    "news.sub": "Lấy trực tiếp từ GitHub mỗi khi có bản mới.",
+    "news.note": "Tóm tắt từ lịch sử thay đổi trên GitHub (tiếng Anh).",
+    "news.all": "Xem trên GitHub",
+    "news.earlier": "Các bản trước",
+    "faq.title": "Hỏi đáp",
+    "faq.q1": "Perch có miễn phí không?",
+    "faq.a1": "Có. Perch miễn phí và là mã nguồn mở theo giấy phép GPL-3.0, toàn bộ mã nguồn có trên <a href=\"https://github.com/trieuluan/perch-mac\" rel=\"noopener\">GitHub</a>.",
+    "faq.q2": "Vì sao macOS chặn Perch ở lần mở đầu?",
+    "faq.a2": "Perch chưa được Apple công chứng (notarize), nên macOS không xác minh được nhà phát triển và chặn bản tải về cho tới khi bạn cho phép một lần trong <b>Cài đặt hệ thống › Quyền riêng tư &amp; Bảo mật</b>. Cài bằng Homebrew thì không cần bước này. Ký Developer ID và công chứng đã nằm trong kế hoạch.",
+    "faq.q3": "Perch có ghi âm không?",
+    "faq.a3": "Không. Hiệu ứng âm thanh cần quyền Ghi âm thanh hệ thống, nhưng âm thanh chỉ được phân tích ngay trên Mac, không bao giờ được ghi lại hay gửi đi đâu. Nếu không cấp quyền, hiệu ứng chuyển về hoạt ảnh đơn giản.",
+    "faq.q4": "Perch chạy trên macOS nào?",
+    "faq.a4": "macOS 14 Sonoma trở lên. Hiệu ứng âm thanh cần macOS 14.2 trở lên.",
+    "faq.q5": "Perch cập nhật thế nào?",
+    "faq.a5": "Sau lần mở đầu tiên, Perch tự kiểm tra phiên bản mới và tự cập nhật.",
+    "faq.q6": "Perch khác Boring Notch ở điểm nào?",
+    "faq.a6": "Perch là bản fork của Boring Notch và giữ nguyên mọi thứ của bản gốc: trình phát nhạc, lịch, kệ tệp, HUD hệ thống, pin và gương webcam. Perch thêm hiệu ứng chạy theo nhạc, lời bài hát, thông báo trong notch, tham gia họp bằng một cú bấm, tab Hệ thống và Thanh menu, chọn đầu ra âm thanh, và bản tiếng Việt.",
+    "faq.q7": "Mình gặp lỗi, báo ở đâu?",
+    "faq.a7": "Bạn mở một issue trên <a href=\"https://github.com/trieuluan/perch-mac/issues\" rel=\"noopener\">GitHub</a> nhé, kèm phiên bản macOS và bạn đang làm gì khi lỗi xảy ra.",
     "install.title": "Cài đặt",
     "install.sub": "Cần macOS 14 Sonoma trở lên (hiệu ứng âm thanh cần 14.2+). Sau lần mở đầu tiên, Perch tự cập nhật.",
     "install.recommended": "Khuyên dùng",
@@ -160,25 +181,76 @@
   });
   document.addEventListener("click", () => notch.classList.remove("is-open"));
 
-  // ---------- Latest version from GitHub ----------
+  // ---------- Latest version and what's new, from GitHub ----------
+  // One call lists recent releases. If the newest release has bullet notes they
+  // are shown; otherwise the commit titles since the previous release are used.
   let release = null;
   const versionEl = document.getElementById("version");
+  const newsEl = document.getElementById("whats-new");
+
+  const fmtDate = (iso) =>
+    new Date(iso).toLocaleDateString(lang === "vi" ? "vi-VN" : "en-US", {
+      year: "numeric", month: "long", day: "numeric",
+    });
+  const bare = (tag) => tag.replace(/^v/i, "");
 
   function renderVersion() {
     if (!release) return;
-    const v = release.tag.replace(/^v/i, "");
-    versionEl.textContent = `${t("version")} ${v}`;
+    versionEl.textContent = `${t("version")} ${bare(release.tag)}`;
     versionEl.hidden = false;
-    if (release.date) {
-      const d = new Date(release.date);
-      versionEl.title = d.toLocaleDateString(lang === "vi" ? "vi-VN" : "en-US", {
-        year: "numeric", month: "long", day: "numeric",
-      });
-    }
+    if (release.date) versionEl.title = fmtDate(release.date);
+    renderNews();
+  }
+
+  function renderNews() {
+    if (!release || !release.notes.length) return;
+    newsEl.querySelector(".news-version").textContent = `${t("version")} ${bare(release.tag)}`;
+    newsEl.querySelector(".news-date").textContent = release.date ? fmtDate(release.date) : "";
+    newsEl.querySelector(".news-link").href = release.url;
+    const list = newsEl.querySelector(".news-list");
+    list.replaceChildren(...release.notes.map((n) => {
+      const li = document.createElement("li");
+      li.textContent = n;
+      return li;
+    }));
+    const earlier = newsEl.querySelector(".news-earlier");
+    earlier.replaceChildren(...release.earlier.map((r) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = r.url;
+      a.textContent = bare(r.tag);
+      const span = document.createElement("span");
+      span.textContent = fmtDate(r.date);
+      li.append(a, span);
+      return li;
+    }));
+    newsEl.querySelector(".news-earlier-wrap").hidden = !release.earlier.length;
+    newsEl.querySelector(".news-note").hidden = release.notesFrom !== "commits";
+    newsEl.hidden = false;
+  }
+
+  // Bullet lines from a release body, with simple markdown removed.
+  function notesFromBody(body) {
+    return (body || "").split(/\r?\n/)
+      .filter((l) => /^\s*[-*+]\s+/.test(l) && !/full changelog/i.test(l))
+      .map((l) => l.replace(/^\s*[-*+]\s+/, "")
+        .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+        .replace(/[*_`]/g, "")
+        .trim())
+      .filter(Boolean)
+      .slice(0, 8);
+  }
+
+  function notesFromCommits(commits) {
+    return commits
+      .filter((c) => (c.parents || []).length === 1)
+      .map((c) => c.commit.message.split("\n")[0].trim())
+      .filter((m) => m && !/^(version\s+v?\d|merge\b|bump\b)/i.test(m) && !/\breadme\b/i.test(m))
+      .slice(0, 8);
   }
 
   async function loadRelease() {
-    const KEY = "perch.release";
+    const KEY = "perch.release.v2";
     try {
       const cached = JSON.parse(sessionStorage.getItem(KEY) || "null");
       if (cached && Date.now() - cached.at < 10 * 60 * 1000) {
@@ -186,18 +258,34 @@
         return renderVersion();
       }
     } catch (_) {}
-    try {
-      const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`, {
+    const api = (path) =>
+      fetch(`https://api.github.com/repos/${REPO}${path}`, {
         headers: { Accept: "application/vnd.github+json" },
-      });
-      if (!res.ok) return;
-      const json = await res.json();
-      if (!json.tag_name) return;
-      release = { tag: json.tag_name, date: json.published_at };
+      }).then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
+    try {
+      const list = (await api("/releases?per_page=6")).filter((r) => !r.draft && !r.prerelease);
+      if (!list.length) return;
+      const [latest, previous] = list;
+      release = {
+        tag: latest.tag_name,
+        date: latest.published_at,
+        url: latest.html_url,
+        notes: notesFromBody(latest.body),
+        notesFrom: "release",
+        earlier: list.slice(1, 5).map((r) => ({ tag: r.tag_name, date: r.published_at, url: r.html_url })),
+      };
+      renderVersion();
+      if (!release.notes.length && previous) {
+        try {
+          const cmp = await api(`/compare/${encodeURIComponent(previous.tag_name)}...${encodeURIComponent(latest.tag_name)}`);
+          release.notes = notesFromCommits(cmp.commits || []);
+          release.notesFrom = "commits";
+        } catch (_) {}
+      }
       try { sessionStorage.setItem(KEY, JSON.stringify({ at: Date.now(), release })); } catch (_) {}
       renderVersion();
     } catch (_) {
-      // Offline or rate-limited: the page works fine without a version number.
+      // Offline or rate-limited: the page works fine without these.
     }
   }
 

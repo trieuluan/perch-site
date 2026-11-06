@@ -46,6 +46,7 @@
     <nav class="nav-links">
       <a href="#features" data-i18n="nav.features">Features</a>
       <a href="#install" data-i18n="nav.install">Install</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
       <a href="https://github.com/trieuluan/perch-mac" rel="noopener">GitHub</a>
       <div class="lang" role="group" aria-label="Language">
         <button type="button" data-lang="en" aria-pressed="true">EN</button>
@@ -158,6 +159,24 @@
       <p class="also" data-i18n="also">Perch also keeps everything from Boring Notch: the music player, calendar, file shelf, system HUDs, battery and webcam mirror. It's available in English and Vietnamese, following your Mac's language.</p>
     </section>
 
+    <section id="whats-new" class="news" hidden>
+      <h2 class="section-title" data-i18n="news.title">What's new</h2>
+      <p class="section-sub" data-i18n="news.sub">Pulled straight from GitHub whenever a new version ships.</p>
+      <div class="panel news-panel">
+        <div class="news-head">
+          <h3 class="news-version"></h3>
+          <span class="news-date"></span>
+          <a class="news-link" href="https://github.com/trieuluan/perch-mac/releases/latest" rel="noopener" data-i18n="news.all">View on GitHub</a>
+        </div>
+        <ul class="news-list"></ul>
+        <p class="news-note small" data-i18n="news.note" hidden>Summarized from the change history on GitHub.</p>
+        <div class="news-earlier-wrap" hidden>
+          <h4 data-i18n="news.earlier">Earlier releases</h4>
+          <ul class="news-earlier"></ul>
+        </div>
+      </div>
+    </section>
+
     <section id="install" class="install">
       <h2 class="section-title" data-i18n="install.title">Install</h2>
       <p class="section-sub" data-i18n="install.sub">Requires macOS 14 Sonoma or later (visualizers need 14.2+). After the first launch, Perch updates itself.</p>
@@ -196,6 +215,40 @@
           <div><dt data-i18n="perms.ax">Accessibility</dt><dd data-i18n="perms.axBody">Showing and opening menu bar icons hidden by the notch.</dd></div>
           <div><dt data-i18n="perms.cal">Calendars &amp; Reminders</dt><dd data-i18n="perms.calBody">The calendar, event reminders and the Join button.</dd></div>
         </dl>
+      </div>
+    </section>
+
+    <section id="faq" class="faq">
+      <h2 class="section-title" data-i18n="faq.title">Questions</h2>
+      <div class="faq-list">
+        <details>
+          <summary data-i18n="faq.q1">Is Perch free?</summary>
+          <p data-i18n="faq.a1">Yes. Perch is free and open source under the GPL-3.0 license, and the full source code is on <a href="https://github.com/trieuluan/perch-mac" rel="noopener">GitHub</a>.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q2">Why does macOS block Perch the first time?</summary>
+          <p data-i18n="faq.a2">Perch isn't notarized by Apple yet, so macOS can't verify the developer and blocks a downloaded copy until you allow it once in <b>System Settings › Privacy &amp; Security</b>. Installing with Homebrew skips this step. Developer ID signing and notarization are on the roadmap.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q3">Does Perch record my audio?</summary>
+          <p data-i18n="faq.a3">No. The visualizers need the System Audio Recording permission, but the sound is analyzed on your Mac and is never recorded or sent anywhere. If you don't grant it, the visualizers fall back to a simple animation.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q4">Which macOS versions does it support?</summary>
+          <p data-i18n="faq.a4">macOS 14 Sonoma or later. The audio visualizers need macOS 14.2 or later.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q5">How do updates work?</summary>
+          <p data-i18n="faq.a5">After the first launch, Perch checks for new versions and updates itself.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q6">How is Perch different from Boring Notch?</summary>
+          <p data-i18n="faq.a6">Perch is a fork of Boring Notch and keeps everything it has: the music player, calendar, file shelf, system HUDs, battery and webcam mirror. On top of that it adds visualizers that follow the music, synced lyrics, notch alerts, one-click meeting join, the System and Menu Bar tabs, an audio output picker, and a Vietnamese translation.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q7">I found a bug. Where do I report it?</summary>
+          <p data-i18n="faq.a7">Please open an issue on <a href="https://github.com/trieuluan/perch-mac/issues" rel="noopener">GitHub</a>, with your macOS version and what you were doing when it happened.</p>
+        </details>
       </div>
     </section>
   </main>
