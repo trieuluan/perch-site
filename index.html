@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Perch — a small hub in your MacBook's notch</title>
+  <meta name="description" content="Perch is a free, open-source macOS app that turns the notch into a hub: music visualizers, synced lyrics, notch alerts, one-click meeting join, system stats and the menu bar icons the notch hides.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0b0a10" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f7f6fb" media="(prefers-color-scheme: light)">
+  <meta property="og:title" content="Perch — a small hub in your MacBook's notch">
+  <meta property="og:description" content="Music visualizers, synced lyrics, notch alerts, meeting join and more, all around the camera.">
+  <meta property="og:image" content="assets/icon-512.png">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/icon-256.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Mock notch: opens on hover (or tap on touch screens) -->
+  <div class="notch" id="notch" aria-hidden="true">
+    <div class="notch-closed">
+      <span class="notch-art"></span>
+      <span class="notch-bars"><i></i><i></i><i></i><i></i></span>
+    </div>
+    <div class="notch-open">
+      <div class="notch-player">
+        <span class="notch-cover"></span>
+        <div class="notch-meta">
+          <b>Perch</b>
+          <span data-i18n="notch.now">Hi, I'm the notch 👋</span>
+          <div class="notch-progress"><span></span></div>
+        </div>
+        <div class="notch-viz"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <p class="notch-lyric" data-i18n="notch.lyric">♪ a small hub that lives in your notch ♪</p>
+    </div>
+  </div>
+
+  <header class="nav">
+    <a class="brand" href="#top"><img src="assets/icon-256.png" alt="" width="28" height="28">Perch</a>
+    <nav class="nav-links">
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#install" data-i18n="nav.install">Install</a>
+      <a href="https://github.com/trieuluan/perch-mac" rel="noopener">GitHub</a>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="vi" aria-pressed="false">VI</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <img class="hero-icon" src="assets/icon-512.png" alt="Perch app icon" width="144" height="144">
+      <h1>Perch</h1>
+      <p class="tagline" data-i18n="hero.tagline">A small hub that lives in your MacBook's notch</p>
+      <p class="lede" data-i18n="hero.lede">Music with visualizers and synced lyrics, system stats, calendar reminders, the menu bar icons the notch hides, and quick alerts, all around the camera.</p>
+
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/trieuluan/perch-mac/releases/latest/download/Perch.dmg">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.83.86-3.59 2.18-1.53 2.66-.39 6.6 1.1 8.75.73 1.05 1.6 2.24 2.73 2.2 1.1-.05 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.4 1.2-2.46-.03-.01-2.3-.88-2.32-3.5zM14.2 6.13c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.67-.92 2.66.97.08 1.96-.49 2.56-1.21z"/></svg>
+          <span data-i18n="hero.download">Download for macOS</span>
+        </a>
+        <p class="meta"><span class="version" id="version" hidden></span><span data-i18n="hero.req">Free &amp; open source · macOS 14 Sonoma or later</span></p>
+      </div>
+
+      <div class="cmd" data-copy="brew install --cask trieuluan/perch/perch">
+        <span class="prompt">$</span><code>brew install --cask trieuluan/perch/perch</code>
+        <button type="button" class="copy" data-i18n-aria="copy.aria" aria-label="Copy command"><span data-i18n="copy.label">Copy</span></button>
+      </div>
+
+      <figure class="screen screen-hero">
+        <img src="assets/media/notch-tour.gif" width="610" height="190" alt="Opening the notch: the player with a music-reactive background, then the System and Menu Bar tabs" data-i18n-alt="alt.tour">
+      </figure>
+    </section>
+
+    <section id="features" class="features">
+      <h2 class="section-title" data-i18n="features.title">Everything around the camera</h2>
+
+      <article class="feature">
+        <div class="feature-text">
+          <span class="eyebrow" data-i18n="viz.eyebrow">Visualizers</span>
+          <h3 data-i18n="viz.title">Visualizers that hear the music</h3>
+          <p data-i18n="viz.body">Perch analyzes what your Mac is playing, on-device, and follows 24 frequency bands, the lead melody, drum hits and how bright the sound is. It shows up behind the player (7 styles), next to the album art in the closed notch, and across the menu bar (11 styles), in colors from the album art or your own gradient.</p>
+        </div>
+        <figure class="screen screen-strip">
+          <img class="crop-left" src="assets/media/menubar-visualizer.gif" width="1200" height="25" loading="lazy" alt="Visualizer across the menu bar" data-i18n-alt="alt.menubar">
+        </figure>
+      </article>
+
+      <article class="feature">
+        <div class="feature-text">
+          <span class="eyebrow" data-i18n="lyrics.eyebrow">Synced lyrics</span>
+          <h3 data-i18n="lyrics.title">Sing along from the notch</h3>
+          <p data-i18n="lyrics.body">The line being sung shows under the closed notch, and long lines glide sideways so you can read them to the end. Open the notch and swipe the player with two fingers to see the whole song, karaoke style: click a line to jump there, or nudge the timing when a music video runs early. Lyrics come from LRCLIB, with Vietnamese titles and YouTube-style names handled.</p>
+        </div>
+        <div class="media-pair">
+          <figure class="screen">
+            <img src="assets/media/lyrics-closed.gif" width="540" height="96" loading="lazy" alt="Current lyric line under the closed notch" data-i18n-alt="alt.lyricsClosed">
+          </figure>
+          <figure class="screen">
+            <img src="assets/media/lyrics-page.gif" width="610" height="190" loading="lazy" alt="Lyrics page in the player, following the song" data-i18n-alt="alt.lyricsPage">
+          </figure>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-text">
+          <span class="eyebrow" data-i18n="alerts.eyebrow">Notch alerts</span>
+          <h3 data-i18n="alerts.title">Quiet alerts beside the camera</h3>
+          <p data-i18n="alerts.body">Short messages when something happens: an event is about to start, a reminder is due, the Mac is overloaded (and which app is responsible), headphones connect (with battery), the keyboard input source changes, or Caps Lock turns on.</p>
+        </div>
+        <figure class="screen screen-strip">
+          <img src="assets/media/notch-alerts.gif" width="950" height="37" loading="lazy" alt="Event reminder and CPU alert in the closed notch" data-i18n-alt="alt.alerts">
+        </figure>
+      </article>
+
+      <article class="feature feature-split">
+        <div class="feature-text">
+          <span class="eyebrow" data-i18n="meet.eyebrow">Calendar</span>
+          <h3 data-i18n="meet.title">Join meetings from the notch</h3>
+          <p data-i18n="meet.body">A few minutes before a meeting, the open notch shows a pill with the time left. Click it to join Google Meet, Zoom, Microsoft Teams, Webex, Slack huddles or FaceTime, in the native app when it's installed.</p>
+        </div>
+        <figure class="screen">
+          <img src="assets/media/meeting-join.gif" width="610" height="190" loading="lazy" alt="Join pill in the open notch" data-i18n-alt="alt.meet">
+        </figure>
+      </article>
+
+      <div class="cards">
+        <article class="card">
+          <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l4-6 4 3 4-7 6 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3 data-i18n="sys.title">System at a glance</h3>
+          <p data-i18n="sys.body">The <b>System</b> tab shows CPU, memory, network and battery with live sparklines.</p>
+        </article>
+        <article class="card">
+          <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="9" y="4" width="6" height="3.5" rx="1.2" fill="currentColor"/><path d="M6 14h12M6 18h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <h3 data-i18n="menubar.title">Icons hidden by the notch</h3>
+          <p data-i18n="menubar.body">On a crowded menu bar, macOS hides icons behind the notch. The <b>Menu Bar</b> tab lists them, with their real icons, and opens their menus.</p>
+        </article>
+        <article class="card">
+          <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="3" y="14" width="4" height="6" rx="1.5" fill="currentColor"/><rect x="17" y="14" width="4" height="6" rx="1.5" fill="currentColor"/></svg>
+          <h3 data-i18n="audio.title">Audio output picker</h3>
+          <p data-i18n="audio.body">Switch between speakers, AirPods and other outputs from a button in the player.</p>
+        </article>
+      </div>
+
+      <p class="also" data-i18n="also">Perch also keeps everything from Boring Notch: the music player, calendar, file shelf, system HUDs, battery and webcam mirror. It's available in English and Vietnamese, following your Mac's language.</p>
+    </section>
+
+    <section id="install" class="install">
+      <h2 class="section-title" data-i18n="install.title">Install</h2>
+      <p class="section-sub" data-i18n="install.sub">Requires macOS 14 Sonoma or later (visualizers need 14.2+). After the first launch, Perch updates itself.</p>
+
+      <div class="install-grid">
+        <div class="panel">
+          <span class="badge" data-i18n="install.recommended">Recommended</span>
+          <h3 data-i18n="install.brewTitle">With Homebrew</h3>
+          <div class="cmd" data-copy="brew install --cask trieuluan/perch/perch">
+            <span class="prompt">$</span><code>brew install --cask trieuluan/perch/perch</code>
+            <button type="button" class="copy" data-i18n-aria="copy.aria" aria-label="Copy command"><span data-i18n="copy.label">Copy</span></button>
+          </div>
+          <p data-i18n="install.brewNote">The cask clears the quarantine flag for you, so Perch opens straight away.</p>
+        </div>
+
+        <div class="panel">
+          <h3 data-i18n="install.dmgTitle">Or download the DMG</h3>
+          <ol class="steps">
+            <li data-i18n="install.s1">Download <a href="https://github.com/trieuluan/perch-mac/releases/latest/download/Perch.dmg">Perch.dmg</a> and drag Perch into Applications.</li>
+            <li data-i18n="install.s2">Open Perch. macOS says it can't verify the developer, because Perch isn't notarized by Apple yet. Click <b>Done</b>.</li>
+            <li data-i18n="install.s3">Go to <b>System Settings › Privacy &amp; Security</b>, scroll down to the message about Perch, and click <b>Open Anyway</b>.</li>
+            <li data-i18n="install.s4">Confirm with your password or Touch ID. You only do this once.</li>
+          </ol>
+          <p class="small" data-i18n="install.xattr">Prefer the Terminal? This does the same thing:</p>
+          <div class="cmd" data-copy="xattr -dr com.apple.quarantine /Applications/Perch.app">
+            <span class="prompt">$</span><code>xattr -dr com.apple.quarantine /Applications/Perch.app</code>
+            <button type="button" class="copy" data-i18n-aria="copy.aria" aria-label="Copy command"><span data-i18n="copy.label">Copy</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel perms">
+        <h3 data-i18n="perms.title">Permissions Perch asks for</h3>
+        <dl>
+          <div><dt data-i18n="perms.audio">System Audio Recording</dt><dd data-i18n="perms.audioBody">Visualizers. Audio is analyzed on-device, never recorded or sent anywhere. Without it, visualizers fall back to a simple animation.</dd></div>
+          <div><dt data-i18n="perms.ax">Accessibility</dt><dd data-i18n="perms.axBody">Showing and opening menu bar icons hidden by the notch.</dd></div>
+          <div><dt data-i18n="perms.cal">Calendars &amp; Reminders</dt><dd data-i18n="perms.calBody">The calendar, event reminders and the Join button.</dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p data-i18n="footer.credit">Perch is a fork of <a href="https://github.com/TheBoredTeam/boring.notch" rel="noopener">Boring Notch</a> by TheBoredTeam and contributors, and like the original it is free software under the <a href="https://github.com/trieuluan/perch-mac/blob/main/LICENSE" rel="noopener">GPL-3.0</a> license.</p>
+    <p class="footer-links">
+      <a href="https://github.com/trieuluan/perch-mac" rel="noopener" data-i18n="footer.source">Source on GitHub</a>
+      <a href="https://github.com/trieuluan/perch-mac/releases" rel="noopener" data-i18n="footer.releases">Release notes</a>
+      <a href="https://github.com/trieuluan/perch-mac/issues" rel="noopener" data-i18n="footer.issues">Report an issue</a>
+    </p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
