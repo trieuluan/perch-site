@@ -201,6 +201,47 @@
     }
   }
 
+  // ---------- Demo videos ----------
+  // Load each clip only when it nears the screen, play it while visible,
+  // and pause it off-screen. With reduced motion, show controls instead of autoplaying.
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const videos = [...document.querySelectorAll("video.demo")];
+
+  function fallBackToGif(v) {
+    const img = document.createElement("img");
+    img.src = v.dataset.gif;
+    img.alt = v.getAttribute("aria-label") || "";
+    img.width = v.width;
+    img.height = v.height;
+    img.className = v.className.replace("demo", "").trim();
+    v.replaceWith(img);
+  }
+
+  function load(v) {
+    if (v.src) return;
+    v.addEventListener("error", () => fallBackToGif(v), { once: true });
+    v.src = v.dataset.src;
+  }
+
+  if (reduceMotion) videos.forEach((v) => (v.controls = true));
+
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(({ target: v, isIntersecting }) => {
+        if (!v.isConnected) return io.unobserve(v);
+        if (isIntersecting) {
+          load(v);
+          if (!reduceMotion) v.play().catch(() => {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      });
+    }, { rootMargin: "200px 0px" });
+    videos.forEach((v) => io.observe(v));
+  } else {
+    videos.forEach((v) => { load(v); if (!reduceMotion) v.autoplay = true; });
+  }
+
   setLang(initialLang());
   loadRelease();
 })();

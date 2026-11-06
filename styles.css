@@ -263,10 +263,10 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
   border: 1px solid rgba(255,255,255,.06);
   overflow: hidden;
 }
-.screen img { width: 100%; border-radius: 10px; }
+.screen img, .screen video { display: block; width: 100%; height: auto; border-radius: 10px; background: #000; }
 .screen-hero { position: relative; z-index: 1; max-width: 720px; margin: 48px auto 0; padding: 14px; }
 .screen-strip { padding: 18px 14px; }
-.screen-strip img { border-radius: 4px; }
+.screen-strip img, .screen-strip video { border-radius: 4px; }
 
 /* ---------- Features ---------- */
 .section-title { font-size: clamp(30px, 5vw, 44px); line-height: 1.1; letter-spacing: -0.02em; text-align: center; margin: 0 0 12px; }
@@ -354,8 +354,8 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
   .notch-closed { padding: 0 10px; }
   .notch-art { width: 15px; height: 15px; border-radius: 4px; }
   /* Wide menu-bar strips: crop to the middle (the notch) at a readable size */
-  .screen-strip img { height: 40px; width: 100%; object-fit: cover; object-position: 50% 50%; }
-  .screen-strip img.crop-left { object-position: 28% 50%; }
+  .screen-strip img, .screen-strip video { height: 40px; width: 100%; object-fit: cover; object-position: 50% 50%; }
+  .screen-strip .crop-left { object-position: 28% 50%; }
   main { padding: 0 16px; }
   .hero-top { padding-top: 40px; }
   .hero-icon { width: 112px; height: 112px; }
